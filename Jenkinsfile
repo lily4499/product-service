@@ -4,7 +4,13 @@ pipeline {
     DOCKER_USER = 'laly9999'
     IMAGE_NAME = 'product-service'
   }
+
   stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: 'https://github.com/lily4499/product-service.git'
+      }
+    }
     stage('Build') {
       steps { sh 'docker build -t $DOCKER_USER/$IMAGE_NAME:$BUILD_NUMBER .' }
     }
