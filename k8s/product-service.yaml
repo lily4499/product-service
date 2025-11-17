@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: devops-portfolio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: laly9999/product-service:1
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_URI
+              value: mongodb://mongo:27017/productdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: devops-portfolio
+spec:
+  selector:
+    app: product-service
+  ports:
+    - port: 8081
+      targetPort: 8081
+
